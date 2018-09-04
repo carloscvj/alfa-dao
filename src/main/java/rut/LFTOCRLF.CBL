@@ -1,0 +1,87 @@
+       IDENTIFICATION DIVISION.
+
+       PROGRAM-ID.    LFTOCRLF.
+       AUTHOR.        carlos.
+       SECURITY.      PUES ESO, CONVIERTE 0A EN 0D0A.
+
+       ENVIRONMENT DIVISION.
+
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+
+           SELECT FORIGEN
+                  ASSIGN TO RANDOM NOMBREFILE1
+                  ORGANIZATION IS BINARY SEQUENTIAL
+                  FILE STATUS IS ERRORES.
+           SELECT FDESTINO
+                  ASSIGN TO RANDOM NOMBREFILE2
+                  ORGANIZATION IS BINARY SEQUENTIAL
+                  FILE STATUS IS ERRORES.
+
+       DATA DIVISION.
+       FILE SECTION.
+
+       FD  FORIGEN
+           DATA RECORD IS RORIGEN.
+       01  RORIGEN PIC X.
+       FD  FDESTINO
+           DATA RECORD IS RDESTINO.
+       01  RDESTINO PIC X.
+
+       WORKING-STORAGE SECTION.
+
+           COPY "WO-ERRORES".
+
+       77  PROG     PIC X(10) VALUE "LFTOCRLF".
+       77  II       PIC 99.
+       77  JJ       PIC 99.
+       77  ANTCHAR  PIC X.
+
+       LINKAGE SECTION.
+
+       77  NOMBREFILE1           PIC X(256).
+
+       PROCEDURE DIVISION USING NOMBREFILE1.
+
+       PROGRAMA SECTION.
+       INICIALES.
+           CALL "PRU14" USING NOMBREFILE2.
+       PROCESOS.
+           OPEN INPUT FDESTINO.
+           IF ERRORES = "00" *>SI EL DESTINO EXISTE NO HAY QUE VOLVER A HACERLO.
+              CLOSE FDESTINO
+              DISPLAY "YA HA SIDO CREADO :" NOMBREFILE2 UPON SYSOUT
+              GO TO FIN-PROCESOS
+           END-IF.
+           OPEN INPUT FORIGEN.
+           IF ERRORES NOT = "00"
+              GO TO FIN-PROCESOS.
+           OPEN OUTPUT FDESTINO.
+           IF ERRORES NOT = ZEROES
+              CLOSE FORIGEN
+              GO TO FIN-PROCESOS.
+
+           DISPLAY "DEBUG:CONVIRTIENDO LF EN CRLF" UPON SYSOUT.
+           MOVE SPACES TO ANTCHAR.
+       LEER.
+           READ FORIGEN AT END
+                GO TO CERRAR.
+
+           IF ANTCHAR NOT = X"0D"
+              IF RORIGEN = X"0A"
+                 WRITE RDESTINO FROM X"0D"
+              END-IF
+           END-IF.
+           MOVE RORIGEN TO ANTCHAR.
+           WRITE RDESTINO FROM RORIGEN.
+
+           GO TO LEER.
+       CERRAR.
+           CLOSE FORIGEN.
+           CLOSE FDESTINO.
+           CALL "PRUCP" USING NOMBREFILE2 NOMBREFILE1.
+       FIN-PROCESOS.
+           EXIT PROGRAM.
+       FIN-PROGRAMA.
+           STOP RUN.
+

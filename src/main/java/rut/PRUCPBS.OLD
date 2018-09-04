@@ -1,0 +1,99 @@
+       IDENTIFICATION DIVISION.
+
+       PROGRAM-ID.    PRUCPBS. *>OLD Esto ya se hace desde java. Si alguien lo llama es mejor que de error.
+       AUTHOR.        carlos.
+       SECURITY.      COPIAR UN FICHERO A OTRO EN BINARY SEQUENTIAL EXCLUYENDO NULOS.
+
+       ENVIRONMENT DIVISION.
+
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+
+           SELECT FORIGEN
+                  ASSIGN TO RANDOM NOMBREFILE1
+                  ORGANIZATION IS BINARY SEQUENTIAL
+                  FILE STATUS IS ERRORES.
+           SELECT FDESTINO
+                  ASSIGN TO RANDOM NOMBREFILE2
+                  ORGANIZATION IS BINARY SEQUENTIAL
+                  FILE STATUS IS ERRORES.
+
+       DATA DIVISION.
+       FILE SECTION.
+
+       FD  FORIGEN
+           DATA RECORD IS RORIGEN.
+       01  RORIGEN PIC X.
+       FD  FDESTINO
+           DATA RECORD IS RDESTINO.
+       01  RDESTINO PIC X.
+
+       WORKING-STORAGE SECTION.
+
+           COPY "WO-ERRORES".
+
+       77  PROG     PIC X(10) VALUE "PRUCPBS".
+       77  II       PIC 99.
+       77  JJ       PIC 99.
+       77  HAYNULO  PIC 9.
+       77  ANT0A    PIC 9.
+
+       LINKAGE SECTION.
+
+       77  NOMBREFILE1           PIC X(256).
+       77  NOMBREFILE2           PIC X(256).
+
+       PROCEDURE DIVISION USING NOMBREFILE1 NOMBREFILE2.
+
+       PROGRAMA SECTION.
+       INICIALES.
+           CALL "PRUMKDIR" USING NOMBREFILE2.
+       PROCESOS.
+           OPEN INPUT FDESTINO.
+           IF ERRORES = "00" *>SI EL DESTINO EXISTE NO HAY QUE VOLVER A HACERLO.
+              CLOSE FDESTINO
+              DISPLAY "YA HA SIDO CREADO :" NOMBREFILE2 UPON SYSOUT
+              GO TO FIN-PROCESOS
+           END-IF.
+           OPEN INPUT FORIGEN.
+           IF ERRORES NOT = "00"
+              GO TO FIN-PROCESOS.
+           OPEN OUTPUT FDESTINO.
+           IF ERRORES NOT = ZEROES
+              CLOSE FORIGEN
+              GO TO FIN-PROCESOS.
+
+           DISPLAY "DEBUG:PREPARANDO..." UPON SYSOUT.
+           MOVE 0 TO HAYNULO.
+           MOVE 0 TO ANT0A.
+       LEER.
+           READ FORIGEN AT END
+                GO TO CERRAR.
+
+           IF RORIGEN = LOW-VALUES
+              MOVE 1 TO HAYNULO
+              GO TO LEER.
+
+           IF HAYNULO = 1
+              MOVE 0 TO HAYNULO
+              IF ANT0A = 0
+                 MOVE 1 TO ANT0A
+                 WRITE RDESTINO FROM X"0A".
+
+           IF RORIGEN = X"0A"
+              MOVE 1 TO ANT0A
+           ELSE
+              MOVE 0 TO ANT0A
+           END-IF.
+           WRITE RDESTINO FROM RORIGEN.
+
+           GO TO LEER.
+       CERRAR.
+           DISPLAY "DEBUG:REINDEXANDO" UPON SYSOUT.
+           CLOSE FORIGEN.
+           CLOSE FDESTINO.
+       FIN-PROCESOS.
+           EXIT PROGRAM.
+       FIN-PROGRAMA.
+           STOP RUN.
+

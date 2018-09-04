@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="compilarcobol" default="build" >
+    <taskdef name="cobolc" classname="cobolc.CobolC"></taskdef>
+    <target name="init">
+        <property file="src/main/ant/compilarcobol/compilarcobol.properties"></property>
+    </target>
+    <target name="empezar" depends="init">
+        <echo level="info" message="--------------------------------------------------------------------------"></echo>        
+        <echo level="info" message="project.name=${project.name}"></echo>
+        <echo level="info" message="ant.home=${ant.home}"></echo>
+        <echo level="info" message="ant.version=${ant.version}"></echo>
+        <echo level="info" message="ant.java.version=${ant.java.version}"></echo>
+        <echo level="info" message="basedir=${basedir}"></echo>
+        <echo level="info" message="COBCPY=${COBCPY}"></echo>
+        <echo level="info" message="--------------------------------------------------------------------------"></echo>
+    </target>
+
+    <target name="build" description="Compilar Cobol" depends="empezar">
+        <cobolc cobcpy="${COBCPY}" srcDir="src/main/java" buildDir="target/classes/exe" debugDir="target/classes/exe">
+            <fileset dir="src/main/java" includes="**/*.CBL"></fileset>
+        </cobolc>
+    </target>
+    
+</project>

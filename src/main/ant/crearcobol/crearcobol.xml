@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="crearcobol" default="build" >
+    <target name="init">
+        <property file="src/main/ant/crearcobol/crearcobol.properties"></property>
+    </target>
+    <target name="empezar" depends="init">
+        <echo level="info" message="project.name=${project.name}"></echo>
+        <echo level="info" message="ant.home=${ant.home}"></echo>
+        <echo level="info" message="ant.version=${ant.version}"></echo>
+        <echo level="info" message="ant.java.version=${ant.java.version}"></echo>
+        <echo level="info" message="basedir=${basedir}"></echo>
+        <echo level="info" message="carpetaSrc=${carpetaSrc}"></echo>
+        <echo level="info" message="carpetaLyb=${carpetaLyb}"></echo>
+        <echo level="info" message="--------------------------------------------------------------------------"></echo>
+                
+    </target>
+    
+    <target name="build" description="Crear sources de COBOL" depends="empezar">
+        <taskdef name="crearcobol" classname="es.cvjpy.utilidades.cobolcrear.CrearCobol"></taskdef>
+        <crearcobol baseDir="${basedir}" cualHago="API" carpetaSrc="${carpetaSrc}" carpetaLyb="${carpetaLyb}">
+            <fileset dir="${crearcobol.lyb}" includes="${crearcobol.includes}"></fileset>
+        </crearcobol>
+        <crearcobol baseDir="${basedir}" cualHago="IMP" carpetaSrc="${carpetaSrc}" carpetaLyb="${carpetaLyb}">
+            <fileset dir="${crearcobol.lyb}" includes="${crearcobol.includes}"></fileset>
+        </crearcobol>
+        <crearcobol baseDir="${basedir}" cualHago="SRV" carpetaSrc="${carpetaSrc}" carpetaLyb="${carpetaLyb}">
+            <fileset dir="${crearcobol.lyb}" includes="${crearcobol.includes}"></fileset>
+        </crearcobol>
+    </target>
+    
+    <target name="limpiar" depends="empezar">
+        <taskdef name="limpiarcobol" classname="es.cvjpy.utilidades.cobolcrear.LimpiarCobol"></taskdef>
+        <limpiarcobol baseDir="${basedir}" cualHago="API" carpetaSrc="${carpetaSrc}" carpetaLyb="${carpetaLyb}">
+            <fileset dir="${crearcobol.lyb}" includes="${crearcobol.includes}"></fileset>
+        </limpiarcobol>
+        <limpiarcobol baseDir="${basedir}" cualHago="IMP" carpetaSrc="${carpetaSrc}" carpetaLyb="${carpetaLyb}">
+            <fileset dir="${crearcobol.lyb}" includes="${crearcobol.includes}"></fileset>
+        </limpiarcobol>
+        <limpiarcobol baseDir="${basedir}" cualHago="SRV" carpetaSrc="${carpetaSrc}" carpetaLyb="${carpetaLyb}">
+            <fileset dir="${crearcobol.lyb}" includes="${crearcobol.includes}"></fileset>
+        </limpiarcobol>
+    </target>
+</project>

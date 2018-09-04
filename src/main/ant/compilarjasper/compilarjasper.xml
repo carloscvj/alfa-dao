@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="jasperc" default="build" >
+    <taskdef name="jasperc" classname="jasperc.JasperC"></taskdef>
+    <target name="init">
+    </target>
+    <target name="empezar" depends="init">
+        <echo level="info" message="project.name=${project.name}"></echo>
+        <echo level="info" message="ant.home=${ant.home}"></echo>
+        <echo level="info" message="ant.version=${ant.version}"></echo>
+        <echo level="info" message="ant.java.version=${ant.java.version}"></echo>
+        <echo level="info" message="basedir=${basedir}"></echo>
+        <echo level="info" message="--------------------------------------------------------------------------"></echo>
+                
+    </target>
+
+    <target name="build" description="Compilar Jasper" depends="empezar">
+        <jasperc srcDir = "src/main/java" buildDir = "target/classes">
+            <fileset dir="src/main/java" includes="**/*.jrxml"></fileset>
+        </jasperc>
+    </target>
+        
+</project>
