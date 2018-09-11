@@ -4,17 +4,13 @@
  */
 package es.cvjpy;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
 
 /**
  *
  * @author carlos
  */
-@Stateless
 public class TextoPlanoAlfaEjb extends TextoPlanoCBLAbs implements TextoPlanoAlfaPro {
 
-    @EJB
     private PrincipalCBLPro PrincipalPro;
 
     public TextoPlanoAlfaEjb() {

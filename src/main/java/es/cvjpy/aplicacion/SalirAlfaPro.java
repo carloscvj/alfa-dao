@@ -4,12 +4,10 @@
  */
 package es.cvjpy.aplicacion;
 
-import javax.ejb.Remote;
 
 /**
  *
  * @author carlos
  */
-@Remote
 public interface SalirAlfaPro extends SalirPro {
 }

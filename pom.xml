@@ -63,12 +63,6 @@
                     <type>jar</type>
                 </dependency>
         -->
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>8.0</version>
-            <type>jar</type>
-        </dependency>
     </dependencies>
     <description>Servidor de datos de COBOL</description>
 </project>

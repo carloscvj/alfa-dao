@@ -4,12 +4,10 @@
  */
 package es.cvjpy.cobol.utilidades;
 
-import javax.ejb.Remote;
 
 /**
  *
  * @author carlos
  */
-@Remote
 public interface ReconstruirIdxAlfaPro extends ReconstruirIdxPro {
 }

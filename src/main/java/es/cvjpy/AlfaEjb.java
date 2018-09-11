@@ -23,27 +23,18 @@ import es.cvjpy.cobol.utilidades.ReconstruirIdxPro;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
 
 /**
  *
  * @author carlos
  */
-@Stateless
 public class AlfaEjb extends PrincipalCBLAbs implements AlfaPro, PrincipalCBLPro {
 
-    @EJB
     private SalirAlfaPro salirAlfaEjb;
-    @EJB
     private PreferenciasAlfaPro preferenciasAlfaEjb;
-    @EJB
     private ConfiguracionAlfaPro configuracionAlfaEjb;
-    @EJB
     private TextoPlanoAlfaPro textoPlanoAlfaEjb;
-    @EJB
     private ReconstruirIdxAlfaPro reconstruirIdxAlfaEjb;
-    @EJB
     private ReconstruirIdxGenAlfaPro reconstruirIdxGenAlfaEjb;
 
     @Override

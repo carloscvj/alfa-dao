@@ -5,17 +5,13 @@
 package es.cvjpy.cobol.utilidades;
 
 import es.cvjpy.PrincipalCBLPro;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
 
 /**
  *
  * @author carlos
  */
-@Stateless
 public class ReconstruirIdxAlfaEjb extends ReconstruirIdxAbs implements ReconstruirIdxAlfaPro {
 
-    @EJB
     private PrincipalCBLPro principalPro;
 
     public ReconstruirIdxAlfaEjb() {

@@ -5,17 +5,13 @@
 package es.cvjpy.aplicacion;
 
 import es.cvjpy.PrincipalCBLPro;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
 
 /**
  *
  * @author carlos
  */
-@Stateless
 public class PreferenciasAlfaEjb extends PreferenciasCBLAbs implements PreferenciasAlfaPro {
 
-    @EJB
     private PrincipalCBLPro principalPro;
 
     public PreferenciasAlfaEjb() {
