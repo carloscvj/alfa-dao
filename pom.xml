@@ -7,7 +7,7 @@
     <parent>
         <groupId>es.cvjpy.maven</groupId>
         <artifactId>compilar</artifactId>
-        <version>1.0</version>
+        <version>1.1</version>
     </parent>
     
     <groupId>es.cvjpy.alfa</groupId>
@@ -40,7 +40,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>alfa-api</artifactId>
-            <version>${project.version}</version>
+            <version>1.0</version>
         </dependency>
   <!--
         <dependency>
