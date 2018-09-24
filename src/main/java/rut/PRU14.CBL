@@ -10,7 +10,7 @@
        FILE-CONTROL.
 
            SELECT TTY
-                  ASSIGN TO RANDOM NOMBRETTY
+                  ASSIGN TO  NOMBRETTY
                   ORGANIZATION IS INDEXED
                   ACCESS MODE IS DYNAMIC
                   RECORD KEY IS RTTY-1

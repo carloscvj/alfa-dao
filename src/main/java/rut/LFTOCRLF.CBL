@@ -10,11 +10,11 @@
        FILE-CONTROL.
 
            SELECT FORIGEN
-                  ASSIGN TO RANDOM NOMBREFILE1
+                  ASSIGN TO  NOMBREFILE1
                   ORGANIZATION IS BINARY SEQUENTIAL
                   FILE STATUS IS ERRORES.
            SELECT FDESTINO
-                  ASSIGN TO RANDOM NOMBREFILE2
+                  ASSIGN TO  NOMBREFILE2
                   ORGANIZATION IS BINARY SEQUENTIAL
                   FILE STATUS IS ERRORES.
 
