@@ -56,7 +56,7 @@
            MOVE SPACES TO DIRECTORIO.
            PERFORM VARYING II FROM 1 BY 1 UNTIL II > 256
                    IF BUF-1(II) = "/" OR "\"
-                      CALL "CBL_CREATE_DIR" USING DIRECTORIO ESTADO
+                      CALL "CBL_CREATE_DIR" USING DIRECTORIO *> ESTADO
                    END-IF
                    MOVE BUF-1(II) TO DIR-1(II)
                    IF DIR-1(II) = " "

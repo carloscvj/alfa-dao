@@ -55,14 +55,14 @@
               MOVE NOMBREFILE TO BUFER
            END-IF.
 
-           CALL "CBL_DELETE_FILE" USING BUFER ESTADO.
+           CALL "CBL_DELETE_FILE" USING BUFER.*> ESTADO.
 
            STRING BUFER ".idx"
                   DELIMITED BY " "
                   INTO BUFER
            END-STRING.
 
-           CALL "CBL_DELETE_FILE" USING BUFER ESTADO.
+           CALL "CBL_DELETE_FILE" USING BUFER.*> ESTADO.
        FIN-PROCESOS.
            EXIT PROGRAM.
        FIN-PROGRAMA.
