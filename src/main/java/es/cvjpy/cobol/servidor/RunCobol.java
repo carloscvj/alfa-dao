@@ -3,19 +3,14 @@ package es.cvjpy.cobol.servidor;
 import es.cvjpy.cobol.EntornoCobol;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Enumeration;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class RunCobol implements java.io.Serializable {
 
-    private String sep = ":";
-    private String cobpath;
-    private String basepath;
     private boolean debug;
     private String comandline;
     private Process proceso;
@@ -23,55 +18,20 @@ public class RunCobol implements java.io.Serializable {
     private BufferedReader errores;
     private boolean hayerror = false;
     private String lineadeerror;
-    private static long van = 0;
-    private long id;
     private BufferedWriter orden;
     private BufferedReader respuesta;
     private final EntornoCobol entorno;
 
     public RunCobol(EntornoCobol entorno) throws Exception {
-        this.id = van++;
         this.entorno = entorno;
         establecepropis();
 
         decirln(entorno.getVersionAlfa().toString());
 
-        decirln("creando:" + id + ", por Thread:" + Thread.currentThread().getId());
     }
 
     private void establecepropis() {
-        String os = System.getProperty("os.name", "linux").toLowerCase();
-        os = os.substring(0, 1);
-        if (os.equals("w")) {
-            sep = ";";
-        }
         debug = entorno.getEntornoLocal().isCOBDEBUG();
-
-        establececobpath();
-    }
-
-    private void establececobpath() {
-        if (!entorno.getEntornoLocal().isMontado()) {
-            basepath = entorno.getEntornoLocal().getBaseCOBPATH();
-            montacobpath(basepath);
-            entorno.getEntornoLocal().setCOBPATH(cobpath);
-            entorno.getEntornoLocal().setMontado(true);
-        }
-    }
-
-    private void montacobpath(String base) {
-        if (cobpath == null) {
-            cobpath = base;
-        }
-        File fpath = new File(base);
-        if (fpath != null) {
-            for (File unf : fpath.listFiles()) {
-                if (unf.isDirectory()) {
-                    cobpath = cobpath + sep + base + "/" + unf.getName();
-                    montacobpath(base + "/" + unf.getName());
-                }
-            }
-        }
     }
 
     private void decir(String esto) {
@@ -88,8 +48,7 @@ public class RunCobol implements java.io.Serializable {
 
     private String getComandline() {
         String ret = "";
-        ret = ret + entorno.getEntornoLocal().getCOBRUN() + " ";
-        ret = ret + entorno.getEntornoLocal().getCOBPROG();
+        ret = ret + "cobcrun SRU ";
         if (comandline != null) {
             ret = comandline;
         }
@@ -100,13 +59,6 @@ public class RunCobol implements java.io.Serializable {
         this.comandline = comandline;
     }
 
-    private void suma(Properties prop1, Properties prop2) {
-        Enumeration<String> en = (Enumeration<String>) prop2.propertyNames();
-        while (en.hasMoreElements()) {
-            String key = en.nextElement();
-            prop1.setProperty(key, prop2.getProperty(key));
-        }
-    }
 
     private String[] getEnv() {
         Properties prop = System.getProperties();
@@ -178,7 +130,7 @@ public class RunCobol implements java.io.Serializable {
     }
 
     private void ejecutaD() throws Exception {
-        proceso = Runtime.getRuntime().exec(getComandline() + " " + "DISPLAYMODE" + "@" + this.id, getEnv());
+        proceso = Runtime.getRuntime().exec(getComandline() + " " + "DISPLAYMODE" + "@", getEnv());
         orden = new BufferedWriter(new OutputStreamWriter(proceso.getOutputStream(), entorno.getCharSet()));
         respuesta = new BufferedReader(new InputStreamReader(proceso.getInputStream(), entorno.getCharSet()));
     }
@@ -207,7 +159,7 @@ public class RunCobol implements java.io.Serializable {
         //Para que los LF NO lleguen al los ficheros de COBOL porque se joden.
         mensaje = mensaje.replace((char) 10, (char) 11);
 
-        decir(">-(" + id + ")->toPro:" + mensaje);
+        decir(">-(" + "uno" + ")->toPro:" + mensaje);
 
         orden.write(mensaje);
         orden.newLine();
@@ -254,9 +206,9 @@ public class RunCobol implements java.io.Serializable {
 
         entra = recibirD();
 
-        decirln("<-(" + id + ")-<to Sock:" + entra);
+        decirln("<-(" + "uno" + ")-<to Sock:" + entra);
         if (!iniciado) {
-            decirln("terminado:" + id);
+            decirln("terminado:" + "uno");
         }
         return entra;
     }
