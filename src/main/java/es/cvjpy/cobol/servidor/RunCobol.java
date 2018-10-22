@@ -31,7 +31,7 @@ public class RunCobol implements java.io.Serializable {
     }
 
     private void establecepropis() {
-        debug = entorno.getEntornoLocal().isCOBDEBUG();
+        debug = true;
     }
 
     private void decir(String esto) {
@@ -58,7 +58,6 @@ public class RunCobol implements java.io.Serializable {
     public void setComandline(String comandline) {
         this.comandline = comandline;
     }
-
 
     private String[] getEnv() {
         Properties prop = System.getProperties();

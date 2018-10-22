@@ -53,6 +53,7 @@
            ELSE
               MOVE NOMBREFICHERO TO BUFER-DIR
            END-IF.
+           DISPLAY "CREANDO DIR:" BUFER-DIR UPON SYSOUT.
            MOVE SPACES TO DIRECTORIO.
            PERFORM VARYING II FROM 1 BY 1 UNTIL II > 256
                    IF BUF-1(II) = "/" OR "\"

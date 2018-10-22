@@ -8,19 +8,12 @@
 
        WORKING-STORAGE SECTION.
 
-       01 ESCRIBIBLE    PIC X     IS EXTERNAL.
        01 USUARIO       PIC X(15) IS EXTERNAL.
        01 PALPRUPARJ    PIC X(128).
        01 OPERACION                   PIC X(32).
        01 VALORES                     PIC X(32).
        01 BUFERENT                    PIC X(1024).
        01 SEPARADOR PIC XXX VALUE "|@|".
-
-       77  RES-CODE      PIC 99  COMP.
-       77  FUNC-CODE     PIC 99  COMP.
-       01  COMAN-LINE.
-           03 LINE-LEN   PIC 9   COMP-X.
-           03 PARAMETRO  PIC X(384).
        77  II PIC 99.
 
        PROCEDURE DIVISION.
@@ -28,26 +21,13 @@
        PROGRAMA SECTION.
        LIMPIEZA.
 
-           INITIALIZE
-                      ESCRIBIBLE
-                      USUARIO
+           INITIALIZE USUARIO
                       PALPRUPARJ
                       OPERACION
                       VALORES
                       BUFERENT
-                      RES-CODE
-                      FUNC-CODE
-                      COMAN-LINE
                       II.
 
-       PREVIO.
-           MOVE "D" TO ESCRIBIBLE.
-           INITIALIZE COMAN-LINE.
-           MOVE 3 TO FUNC-CODE.
-           MOVE 255 TO LINE-LEN.
-           CALL X"91" USING RES-CODE FUNC-CODE COMAN-LINE.
-           
-       INICIALES.
        PROCESOS.
            ACCEPT BUFERENT FROM SYSIN
            INSPECT BUFERENT REPLACING ALL X"00" BY " ".
