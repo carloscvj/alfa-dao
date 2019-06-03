@@ -1,5 +1,0 @@
-
-       01  ERRORES.
-           03 ERROR-1         PIC X.
-           03 ERROR-2         PIC X.
-           03 ERROR-2N REDEFINES ERROR-2 PIC 9 COMP-X.
